@@ -52,10 +52,10 @@ and the responses get received from the output port `:4` ("Out Port 5").
 
 #### Encoder flags
 
-| Function          | *ff* bit 0 |
-|-------------------|:----------:|
-| Absolute (0..127) |      0     |
-| Relative (0, 127) |      1     |
+| Function                    | *ff* bit 0 |
+|-----------------------------|:----------:|
+| Absolute (0..127)           |      0     |
+| Relative (left=65, right=1) |      1     |
 
 #### Buttons and pads flags
 
