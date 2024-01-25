@@ -38,15 +38,15 @@ and the responses get received from the output port `:4` ("Out Port 5").
 
 (numbers are 0-based, usual MIDI MSB/LSB 7-bit format)
 
-| Byte(s)   | Description                          |
-|-----------|--------------------------------------|
-| F0        | SOX                                  |
-| *n1* *n2* | Hardware control ID (see tables)     |
-| *rr* *rr* | Assigned Samson CC# (see the manual) |
-| *cc*      | Channel# (`10` means the current)    |
-| *pp*      | Port# (`05` means the current)       |
-| *ff*      | Flags                                |
-| F7        | EOX                                  |
+| Byte(s)   | Description                                          |
+|-----------|------------------------------------------------------|
+| F0        | SOX                                                  |
+| *n1* *n2* | Hardware control ID (see tables)                     |
+| *rr* *rr* | Assigned Samson CC# (see the manual and [cc_table.md](cc_table.md)) |
+| *cc*      | Channel# (`10` means the current)                    |
+| *pp*      | Port# (`05` means the current)                       |
+| *ff*      | Flags                                                |
+| F7        | EOX                                                  |
 
 (for Samson's "custom CCs" (> 127), +1 (e.g. CC#152 (Master Volume) => `01 19` == 0x99 == 153))
 
