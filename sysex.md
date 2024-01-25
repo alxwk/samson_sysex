@@ -81,7 +81,7 @@ and the responses get received from the output port `:4` ("Out Port 5").
 |---------------|-------------------------|
 | F0            | SOX                     |
 | 00 20 6b      | Arturia manufacturer ID |
-| 02 *op*       | Operation               |
+| 02 *op*       | Operation code          |
 | *n1* *n2*     | Hardware control ID     |
 | *v1* *v2*     | Value to set            |
 | F7            | EOX                     |
@@ -90,7 +90,7 @@ and the responses get received from the output port `:4` ("Out Port 5").
 
 #### Operation codes
 
-| Operation    | Code |
+| Operation    | *op* |
 |--------------|:----:|
 | set CC#      |  01  |
 | set channel# |  02  |
