@@ -1,4 +1,10 @@
-| C C | Description                       | Type        | MSB | LSB | LSB @ read |
+The descriptions was taken literally from the manual.
+
+The column **LSB @ read** specifies the codes returned by "Get Settings" sysex, which are different for certain CCs (see [sysex.md](sysex.md)).
+
+**Note regarding MMC codes**: the manual specifies them from 158 for `STOP` to 170 for `MMC RESET`. Actually punching in `158` for the control on the device gives non-standard code `0` instead of `1` for `STOP`, and the others similarly are shifted by -1. So to be useful the codes need to be incremented by 1 (which is done in this table), but it makes the code for `MMC RESET` unavailable, as it overlaps with `171` for "Pitch Bend". (It's clearly a firmware bug, which was even reported to Samson's support long time ago, but got never addressed in a number of firmware updates.)
+
+| CC  | Description                       | Type        | MSB | LSB | LSB @ read |
 |-----|-----------------------------------|-------------|-----|-----|------------|
 | 0   | Bank Select                       | Controller  | 00  | 00  |            |
 | 1   | Modulation wheel                  | Controller  | 00  | 01  |            |
@@ -128,7 +134,6 @@
 | 125 | Omni mode on                      | Controller  | 00  | 7D  |            |
 | 126 | Poly mode off                     | Controller  | 00  | 7E  |            |
 | 127 | Poly mode on                      | Controller  | 00  | 7F  |            |
-|     |                                   |             |     |     |            |
 | 128 | Pitch Bend Sensitivity            | RPN         | 01  | 00  | 01         |
 | 129 | Fine Tuning                       | RPN         | 01  | 01  | 02         |
 | 130 | Coarse Tuning                     | RPN         | 01  | 02  | 03         |
@@ -159,18 +164,17 @@
 | 155 | XG ON                             | SysE        | 01  | 1B  | 1C         |
 | 156 | GS ON                             | SysE        | 01  | 1C  | 1D         |
 | 157 | GM2 ON                            | SysE        | 01  | 1D  | 1E         |
-|     |                                   |             |     |     |            |
-| 159 | Stop                              | MMC         | 01  | 1F  | 20         |
-| 160 | PLAY                              | MMC         | 01  | 20  | 21         |
-| 161 | DEFERRED PLAY                     | MMC         | 01  | 21  | 22         |
-| 162 | FORWARD                           | MMC         | 01  | 22  | 23         |
-| 163 | REWIND                            | MMC         | 01  | 23  | 24         |
-| 164 | RECORD STROBE                     | MMC         | 01  | 24  | 25         |
-| 165 | RECORD EXIT                       | MMC         | 01  | 25  | 26         |
-| 166 | RECORD PAUSE                      | MMC         | 01  | 26  | 27         |
-| 167 | PAUSE                             | MMC         | 01  | 27  | 28         |
-| 168 | EJECT                             | MMC         | 01  | 28  | 29         |
-| 169 | CHASE                             | MMC         | 01  | 29  | 2A         |
-| 170 | COMMAND ERROR RESET               | MMC         | 01  | 2A  | 2B         |
+|*159*| Stop                              | MMC         | 01  | 1F  | 20         |
+|*160*| PLAY                              | MMC         | 01  | 20  | 21         |
+|*161*| DEFERRED PLAY                     | MMC         | 01  | 21  | 22         |
+|*162*| FORWARD                           | MMC         | 01  | 22  | 23         |
+|*163*| REWIND                            | MMC         | 01  | 23  | 24         |
+|*164*| RECORD STROBE                     | MMC         | 01  | 24  | 25         |
+|*165*| RECORD EXIT                       | MMC         | 01  | 25  | 26         |
+|*166*| RECORD PAUSE                      | MMC         | 01  | 26  | 27         |
+|*167*| PAUSE                             | MMC         | 01  | 27  | 28         |
+|*168*| EJECT                             | MMC         | 01  | 28  | 29         |
+|*169*| CHASE                             | MMC         | 01  | 29  | 2A         |
+|*170*| COMMAND ERROR RESET               | MMC         | 01  | 2A  | 2B         |
 |~~170~~| ~~MMC RESET~~                     | MMC         |     |     |            |
 | 171 | Pitch Bend                        | Pitch Bend  | 01  | 2B  | 2C         |
