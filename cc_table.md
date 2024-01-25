@@ -1,5 +1,7 @@
 The descriptions was taken literally from the manual.
 
+The codes 0..127 are plain MIDI controller codes, while 128+ are "virtual" vendor ones, making the device send various MIDI messages, their types are specified in the corresponding column. The "Device ID" in those messages which need it is hardcoded as `00`.
+
 The column **LSB @ read** specifies the codes returned by "Get Settings" sysex, which are different for certain CCs (see [sysex.md](sysex.md)).
 
 **Note regarding MMC codes**: the manual specifies them from 158 for `STOP` to 170 for `MMC RESET`. Actually punching in `158` for the control on the device gives non-standard MMC command `0` instead of `1` for `STOP`, and the others similarly are shifted by -1. So to be useful the codes need to be incremented by 1 (which is done in this table), but it makes the code for `MMC RESET` unavailable, as it overlaps with `171` for "Pitch Bend". (It's clearly a firmware bug, which was even reported to Samson's support long time ago, but got never addressed in a number of firmware updates.)
