@@ -134,7 +134,7 @@ and the responses get received from the output port `:4` ("Out Port 5").
 
 [todo]
 
-## Set a control
+## Setting a control
 
 ### Request
 
