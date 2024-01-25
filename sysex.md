@@ -167,3 +167,15 @@ and the responses get received from the output port `:4` ("Out Port 5").
 | *op*    | operation code |
 | ?? ??   |                |
 | F7      | EOX            |
+
+## Saving the current setup into a preset
+
+### Request
+
+| Byte(s)       | Description                          |
+|---------------|--------------------------------------|
+| F0            | SOX                                  |
+| 00 20 6b      | Arturia manufacturer ID              |
+| 02 07 *nn* 00 | save to the *nn*'th preset (0-based) |
+| F7            | EOX                                  |
+
