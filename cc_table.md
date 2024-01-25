@@ -4,7 +4,7 @@ The codes 0..127 are plain MIDI controller codes, while 128+ are "virtual" vendo
 
 The column **LSB @ read** specifies the codes returned by "Get Settings" sysex, which are different for certain CCs (see [sysex.md](sysex.md)).
 
-**Note regarding MMC codes**: the manual specifies them from 158 for `STOP` to 170 for `MMC RESET`. Actually punching in `158` for the control on the device gives non-standard MMC command `0` instead of `1` for `STOP`, and the others similarly are shifted by -1. So to be useful the codes need to be incremented by 1 (which is done in this table), but it makes the code for `MMC RESET` unavailable, as it overlaps with `171` for "Pitch Bend". (It's clearly a firmware bug, which was even reported to Samson's support long time ago, but got never addressed in a number of firmware updates.)
+**Note regarding MMC codes**: the manual specifies them from 158 for `STOP` to 170 for `MMC RESET`. Actually punching in `158` for a control on the device gives non-standard MMC command `0` instead of `1` for `STOP`, and the others similarly are shifted by -1. So to be useful the codes need to be incremented by 1 (which is done in this table), but it makes the code for `MMC RESET` unavailable, as it overlaps with `171` for "Pitch Bend". (It's clearly a firmware bug, which was even reported to Samson's support long time ago, but got never addressed in a number of firmware updates.)
 
 | CC  | Description                       | Type        | MSB | LSB | LSB @ read |
 |-----|-----------------------------------|-------------|-----|-----|------------|
