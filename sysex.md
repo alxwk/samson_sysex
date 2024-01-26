@@ -41,8 +41,8 @@ and the responses get received from the output port `:4` ("Out Port 5").
 | Byte(s)   | Description                               |
 |-----------|-------------------------------------------|
 | F0        | SOX                                       |
-| *n1* *n2* | Hardware control ID (see [hardware_ids.md](hardware_ids.md)) |
-| *rr* *rr* | Assigned Samson CC# (see the manual)      |
+| *n1* *n2* | Hardware control ID (see [hardware_ids.md](hardware_ids.md))|
+| *rr* *rr* | Assigned Samson CC# (see the manual and [cc_table.md](cc_table.md))|
 | *cc*      | Channel# (`10` means the current)         |
 | *pp*      | Port# (`05` means the current)            |
 | *ff*      | Flags                                     |
