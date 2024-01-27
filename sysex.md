@@ -71,7 +71,14 @@ and the responses get received from the output port `:4` ("Out Port 5").
 
 ### Response type 2 (misc. settings)
 
-[todo]
+| Byte(s)   | Description                               |
+|-----------|-------------------------------------------|
+| F0        | SOX                                       |
+| 04        | Type |
+| *rr*      | Starting register of the subset (see [registers.md](registers.md)) |
+| *nn* | Presumably the number of registers, but is wrong for the starting `0x28` |
+| .. .. | Subset of the settings registers, starting from *rr* |
+| F7        | EOX                                       |
 
 ## Setting a control
 
@@ -107,6 +114,17 @@ and the responses get received from the output port `:4` ("Out Port 5").
 | ?? ??   |                |
 | F7      | EOX            |
 
+## Setting a misc. register
+
+### Request
+
+| Byte(s)       | Description                          |
+|---------------|--------------------------------------|
+| F0            | SOX                                  |
+| 00 20 6b      | Arturia manufacturer ID              |
+| 02 06 *nn* *vv* *vv* | write *vv* value to the *nn*'th register |
+| F7            | EOX                                  |
+
 ## Saving the current setup into a preset
 
 ### Request
@@ -117,4 +135,3 @@ and the responses get received from the output port `:4` ("Out Port 5").
 | 00 20 6b      | Arturia manufacturer ID              |
 | 02 07 *nn* 00 | save to the *nn*'th preset (0-based) |
 | F7            | EOX                                  |
-
