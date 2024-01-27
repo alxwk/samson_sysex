@@ -1,6 +1,7 @@
 # samson_sysex
 
 This is an attempt to reverse engineer the control protocol of a pretty old MIDI-keyboard SAMSON Graphite 49 (other models probably are similar).
+The info here is for the latest available "version 1" firmware `1.42`. As there exists "version 2" too (for the units with different LCD) it can have some differences.
 
 Files included:
 
