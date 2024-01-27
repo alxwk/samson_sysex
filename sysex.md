@@ -80,6 +80,10 @@ and the responses get received from the output port `:4` ("Out Port 5").
 | .. .. | Subset of the settings registers, starting from *rr* |
 | F7        | EOX                                       |
 
+The message with the offset 0x28 is weird. Something is probably got messed up in the firmware,
+so that SysEx brings irregular(!) number of registers. Though the last five (apparently `0x2d`..`0x31`)
+make sense, I have no idea about the others.
+
 ## Setting a control
 
 ### Request
