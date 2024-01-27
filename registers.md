@@ -20,7 +20,7 @@
 |0F| 00 | |
 |10| 00 | |
 |11| 01 | |
-|12| 40 | Pedal CC# ?|
+|12| 40 | Pedal CC# |
 |13| 00 | |
 |14| 01 | Active zones bitmask, `z4z3z2z1` |
 |**15**| 00 | Z1 Port |
