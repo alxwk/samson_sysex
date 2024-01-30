@@ -163,7 +163,7 @@ The controls mapping of buttons and pads (but not sliders nor encoders) can be c
 by "Setup" mode in the device. These presets also permit changing the mappings of the
 CHANNEL buttons, which aren't assignable in user presets.
 
-he defaults are as follows:
+The defaults are as follows:
 
 ### For MCU modes
 
