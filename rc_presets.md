@@ -20,7 +20,7 @@ The following 15 presets are special and denoted as "Remote Control":
 | 15 | Magix\*   |
 | 16 | Presonus\*|
 
-These presets (except "03 Protools") use variants of Mackie Universal Control protocol
+These presets (except "03 Protools") use variants of Mackie Control Universal protocol
 for interacting with various DAW software. "03 Protools" attempts to emulate older HUI protocol
 which is much more complicated, so the implementation is only partial and seemingly wacky, and I have no particular intent to venture all the way to HUI yet
 (Slavs will understand).
