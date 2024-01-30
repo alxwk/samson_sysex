@@ -28,7 +28,9 @@ which is much more complicated, so the implementation is only partial and seemin
 use *the same* controls mapping (there *can* be some subtle differences in controls realization and feedback processing though,
 otherwise all that "support of oh so many DAWs" would look like a sham).
 
-## MCU controls used
+## MCU controls
+
+### Notes
 
 |Note#| 02 Logic |03 Protools|04 Cubase|06 Cakewalk|08 Traktion|09 Motu |
 |-----|----------|----------|----------|----------|----------|----------|
@@ -128,13 +130,57 @@ otherwise all that "support of oh so many DAWs" would look like a sham).
 | 93  | Stop     |          | Stop     | Stop     | Stop     | Stop     |
 | 94  | Play     |          | Play     | Play     | Play     | Play     |
 | 95  | Rec      |          | Rec      | Rec      | Rec      | Rec      |
+| 104 | FdrTch1  |          | FdrTch1  | FdrTch1  | FdrTch1  | FdrTch1  |
+| 105 | FdrTch2  |          | FdrTch2  | FdrTch2  | FdrTch2  | FdrTch2  |
+| 106 | FdrTch3  |          | FdrTch3  | FdrTch3  | FdrTch3  | FdrTch3  |
+| 107 | FdrTch4  |          | FdrTch4  | FdrTch4  | FdrTch4  | FdrTch4  |
+| 108 | FdrTch5  |          | FdrTch5  | FdrTch5  | FdrTch5  | FdrTch5  |
+| 109 | FdrTch6  |          | FdrTch6  | FdrTch6  | FdrTch6  | FdrTch6  |
+| 110 | FdrTch7  |          | FdrTch7  | FdrTch7  | FdrTch7  | FdrTch7  |
+| 111 | FdrTch8  |          | FdrTch8  | FdrTch8  | FdrTch8  | FdrTch8  |
+| 112 | FdrTchM  |          | FdrTchM  | FdrTchM  | FdrTchM  | FdrTchM  |
+
+### Controllers
+
+| CC# | Name     |
+|-----|----------|
+| 16  | V-pot1   |
+| 17  | V-pot2   |
+| 18  | V-pot3   |
+| 19  | V-pot4   |
+| 20  | V-pot5   |
+| 21  | V-pot6   |
+| 22  | V-pot7   |
+| 23  | V-pot8   |
+
+## HUI controls
+
+[Meh, too much work. Maybe, someday...]
 
 ## Controls mapping
 
 The controls mapping of buttons and pads (but not sliders nor encoders) can be customized
-by "Setup" mode in the device. Certain presets also permit changing the mappings of 
-BANK and OFFSET buttons, which aren't assignable in user presets.
+by "Setup" mode in the device. These presets also permit changing the mappings of the
+CHANNEL buttons, which aren't assignable in user presets.
 
-The defaults are as follows:
+he defaults are as follows:
 
-[TODO:]
+### For MCU modes
+
+* Sliders S1..S9 send `FdrTch1`..`FdrTch2` notes at the start and the end of movement
+(as they lack touch sensors), and Pitch Bend at the corresponding channel for position change.
+
+* Encoders E1..E8 send `V-pot1`..`V-pot8` CCs as relative controls, with control value 65..127 for counterclockwise,
+1..64 for clockwise, the faster the turn, the larger.
+
+* Buttons F1..F8 are mapped to the corresponing `Solo1`..`Solo8` notes (except for "02 Logic", where they're mapped to `Rec1`..`Rec8`).
+ Buttons F9..F16 are mapped to `Mute1`..`Mute8` notes. Transport buttons are mapped as the corresponding trasport notes (91..95).
+BANK and CHANNEL buttons are mapped to `Bank-`/`Bank+` and `Channel-`/`Channel+` notes.
+
+### For the HUI "03 Protools" mode
+
+* Sliders and encoders send HUI touch/move/release messages, like in MCU modes. Those are more complex though,
+google for docs for HUI controls for details. S9 is funny, as it sends touch/release messages, but *not* the movement (as HUI has only 8 sliders).
+
+* Buttons F1..F8, F9..F16, and transport are mapped to the corresponding Solo, Mute and transport controls (I won't get into zone/port mess here).
+BANK and CHANNEL buttons are mapped to `Out`/`Online` and `In`/`Loop` correspondingly.
