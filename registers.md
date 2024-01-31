@@ -17,11 +17,11 @@
 |**0C**| 00 | Z3 LSB |
 |**0D**| 00 | Z4 LSB |
 |**0E**| 00 | ??? |
-|0F| 00 | |
-|10| 00 | |
-|11| 01 | |
+|0F| 00 | Keyboard Curve |
+|10| 00 | Pads Curve |
+|11| 01 | Local |
 |12| 40 | Pedal CC# |
-|13| 00 | |
+|13| 00 | Drawbar |
 |14| 01 | Active zones bitmask, `z4z3z2z1` |
 |**15**| 00 | Z1 Port |
 |**16**| 01 | Z2 Port |
