@@ -133,16 +133,16 @@ tree = ET.ElementTree(ET.Element('preset'))
 
 midiout.send_message([0xf0,0,0x20,0x6b,2,5,preset-1,0xf7])
 
-while True:
+while True :
     event = midiin.get_message()
-    if not event:
+    if not event :
         continue
 
     msg, delta = event
 
-    if msg[1] < 4:
+    if msg[1] < 4 :
         hw_id = msg[1]*128+msg[2]
-        if hw_id not in hwid_map: continue
+        if hw_id not in hwid_map : continue
 
         ctl = ET.Element('control', attrib={'id': hwid_map[hw_id]})
 
@@ -164,32 +164,31 @@ while True:
 
         if hw_id > 27 : # sliders don't need flags
             t = ET.Element('flags')
-            if hw_id >= 128 and hw_id <= 143:       # encoders
+            if hw_id >= 128 and hw_id <= 143 :       # encoders
                 t.append(ET.Element('relative' if (msg[7] & 1) else 'absolute'))
-            else:
+            else :
                 t.append(ET.Element('note' if (msg[7] & 1) else 'controller'))
                 t.append(ET.Element('momentary' if (msg[7] & 2) else 'toggle'))
             ctl.append(t)
 
         tree.getroot().append(ctl)
-    elif msg[1] == 4:
+    elif msg[1] == 4 :
         r_start = msg[2]
         r_n = msg[3]
 
         m = msg[4:-1]
 
-        if len(m) != r_n:
+        if len(m) != r_n :
             m = msg[-11:-1]
 
         r = r_start
-        for v in m:
-            reg = ET.Element('register')
-            reg.set('id', str(r))
+        for v in m :
+            reg = ET.Element('register', attrib={'id': str(r)})
             reg.text = str(v)
             tree.getroot().append(reg)
             r += 1
 
-    if msg[1] == 5:
+    if msg[1] == 5 :
         break
 
 #file = open(f'preset{preset:02}.xml', mode='w')
