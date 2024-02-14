@@ -1,0 +1,61 @@
+#!/usr/bin/python3
+
+import rtmidi
+import re
+import sys
+import xml.etree.ElementTree as ET
+
+if len(sys.argv) < 2:
+    print("Usage: "+sys.argv[0]+" <control set>.xml", file=sys.stderr)
+    sys.exit(-1)
+
+ctlxml_name=sys.argv[1]
+
+tree = ET.parse(ctlxml_name)
+
+midiout = rtmidi.MidiOut()
+midiin = rtmidi.MidiIn()
+midiin.ignore_types(sysex=False)
+
+out_ports = midiout.get_ports()
+out_portn = out_ports.index([i for i in out_ports if re.search("Graphite.*:1", i)][0])
+
+#print(midiout.get_port_name(out_portn), file=sys.stderr)
+
+midiout.open_port(out_portn)
+
+for elem in tree.iter('control'):
+#            0      1    2     3     4   5  6  7  8  9
+    msg = [0xf0, 0x00, 0x20, 0x6b, 0x02, 0, 0, 0, 0, 0, 0xf7]
+
+    hwid = int(elem.get('id'))
+
+    msg[6:8] = divmod(hwid, 128)
+
+    if cc := elem.findtext('cc') :
+        msg[5] = 1
+        msg[8:10] = divmod(int(cc), 128)
+        midiout.send_message(msg)
+
+    if port := elem.findtext('port') :
+        msg[5] = 3
+        msg[9] = int(port)
+        midiout.send_message(msg)
+
+    if ch := elem.findtext('channel') :
+        msg[5] = 2
+        msg[9] = int(ch)
+        midiout.send_message(msg)
+
+    if flags_el := elem.find('flags') :
+        msg[5] = 4
+        flags = 0
+
+        if flags_el.find('relative') is not None or flags_el.find('note') is not None:
+            flags |= 1
+
+        if flags_el.find('momentary') is not None:
+            flags |= 2
+
+        msg[9] = flags
+        midiout.send_message(msg)

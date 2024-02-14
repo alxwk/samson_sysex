@@ -1,0 +1,201 @@
+#!/usr/bin/python3
+
+import rtmidi
+import re
+import sys
+import xml.etree.ElementTree as ET
+
+hwid_map = {  0: "&S3-1;",   1: "&S2-1;",   2: "&S1-1;",   3: "&S4-1;",
+              4: "&S8-2;",   5: "&S5-1;",   6: "&S7-1;",   7: "&S6-1;",
+             10: "&S9;",
+             20: "&S1-2;",  21: "&S2-2;",  22: "&S3-2;",  23: "&S4-2;",
+             24: "&S5-2;",  25: "&S6-2;",  26: "&S7-2;",  27: "&S8-2;",
+
+            131: "&E1-1;", 135: "&E2-1;", 130: "&E3-1;", 134: "&E4-1;",
+            129: "&E5-1;", 133: "&E6-1;", 128: "&E7-1;", 132: "&E8-1;",
+            136: "&E1-2;", 137: "&E2-2;", 138: "&E3-2;", 139: "&E4-2;",
+            140: "&E5-2;", 141: "&E6-2;", 142: "&E7-2;", 143: "&E8-2;",
+
+            295: "&F1;",   294: "&F2;",   293: "&F3;",   292: "&F4;",
+            291: "&F5;",   290: "&F6;",   289: "&F7;",   288: "&F8;",
+            280: "&F9;",   281: "&F10;",  282: "&F11;",  283: "&F12;",
+            284: "&F13;",  285: "&F14;",  286: "&F15;",  287: "&F16;",
+            299: "&REW;",  300: "&FF;",   301: "&STOP;", 302: "&PLAY;", 303: "&REC;",
+            304: "&P1;",   305: "&P2;",   306: "&P3;",   307: "&P4;",
+            308: "&P5;",   309: "&P6;",   310: "&P7;",   311: "&P8;" }
+
+xml_header = '''<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<!DOCTYPE preset [
+<!ELEMENT preset (control|register)+>
+<!ATTLIST preset name CDATA #IMPLIED>
+<!ELEMENT control (cc?,channel?,port?,flags?)>
+<!ATTLIST control id CDATA #REQUIRED>
+<!ELEMENT cc (#PCDATA)>
+<!ELEMENT channel (#PCDATA)>
+<!ELEMENT port (#PCDATA)>
+<!ELEMENT flags (((controller|note),(momentary|toggle))|(relative|absolute))>
+<!ELEMENT controller EMPTY>
+<!ELEMENT note EMPTY>
+<!ELEMENT momentary EMPTY>
+<!ELEMENT toggle EMPTY>
+<!ELEMENT relative EMPTY >
+<!ELEMENT absolute EMPTY >
+<!ELEMENT register (#PCDATA)>
+<!ATTLIST register id CDATA #REQUIRED>
+<!ENTITY S1-1 "2">
+<!ENTITY S2-1 "1">
+<!ENTITY S3-1 "0">
+<!ENTITY S4-1 "3">
+<!ENTITY S5-1 "5">
+<!ENTITY S6-1 "7">
+<!ENTITY S7-1 "6">
+<!ENTITY S8-2 "4">
+<!ENTITY S1-2 "20">
+<!ENTITY S2-2 "21">
+<!ENTITY S3-2 "22">
+<!ENTITY S4-2 "23">
+<!ENTITY S5-2 "24">
+<!ENTITY S6-2 "25">
+<!ENTITY S7-2 "26">
+<!ENTITY S8-2 "27">
+<!ENTITY S9 "10">
+<!ENTITY E1-1 "131">
+<!ENTITY E2-1 "135">
+<!ENTITY E3-1 "130">
+<!ENTITY E4-1 "134">
+<!ENTITY E5-1 "129">
+<!ENTITY E6-1 "133">
+<!ENTITY E7-1 "128">
+<!ENTITY E8-1 "132">
+<!ENTITY E1-2 "136">
+<!ENTITY E2-2 "137">
+<!ENTITY E3-2 "138">
+<!ENTITY E4-2 "139">
+<!ENTITY E5-2 "140">
+<!ENTITY E6-2 "141">
+<!ENTITY E7-2 "142">
+<!ENTITY E8-2 "143">
+<!ENTITY F1 "295">
+<!ENTITY F2 "294">
+<!ENTITY F3 "293">
+<!ENTITY F4 "292">
+<!ENTITY F5 "291">
+<!ENTITY F6 "290">
+<!ENTITY F7 "289">
+<!ENTITY F8 "288">
+<!ENTITY F9 "280">
+<!ENTITY F10 "281">
+<!ENTITY F11 "282">
+<!ENTITY F12 "283">
+<!ENTITY F13 "284">
+<!ENTITY F14 "285">
+<!ENTITY F15 "286">
+<!ENTITY F16 "287">
+<!ENTITY REW "299">
+<!ENTITY FF "300">
+<!ENTITY STOP "301">
+<!ENTITY PLAY "302">
+<!ENTITY REC "303">
+<!ENTITY P1 "304">
+<!ENTITY P2 "305">
+<!ENTITY P3 "306">
+<!ENTITY P4 "307">
+<!ENTITY P5 "308">
+<!ENTITY P6 "309">
+<!ENTITY P7 "310">
+<!ENTITY P8 "311">
+]>'''
+
+if len(sys.argv) < 2:
+    print("Usage: "+sys.argv[0]+" <preset#>", file=sys.stderr)
+    sys.exit(-1)
+
+preset=int(sys.argv[1])
+
+midiout = rtmidi.MidiOut()
+midiin = rtmidi.MidiIn()
+midiin.ignore_types(sysex=False)
+
+out_ports = midiout.get_ports()
+in_ports = midiin.get_ports()
+
+out_portn = out_ports.index([i for i in out_ports if re.search("Graphite.*:1", i)][0])
+in_portn = in_ports.index([i for i in in_ports if re.search("Graphite.*:4", i)][0])
+
+# print(midiout.get_port_name(out_portn), file=sys.stderr)
+port_name = midiin.get_port_name(in_portn)
+# print(port_name, file=sys.stderr)
+
+midiout.open_port(out_portn)
+midiin.open_port(in_portn)
+
+tree = ET.ElementTree(ET.Element('preset'))
+
+midiout.send_message([0xf0,0,0x20,0x6b,2,5,preset-1,0xf7])
+
+while True:
+    event = midiin.get_message()
+    if not event:
+        continue
+
+    msg, delta = event
+
+    if msg[1] < 4:
+        hw_id = msg[1]*128+msg[2]
+        if hw_id not in hwid_map: continue
+
+        ctl = ET.Element('control', attrib={'id': hwid_map[hw_id]})
+
+        t = ET.Element('cc')
+
+        cc = msg[3]*128 + msg[4]
+        if cc > 127 : cc -= 1 # Samson's virtual CCs are shifted
+
+        t.text = str(cc)
+        ctl.append(t)
+
+        t = ET.Element('channel')
+        t.text = str(msg[5])
+        ctl.append(t)
+
+        t = ET.Element('port')
+        t.text = str(msg[6])
+        ctl.append(t)
+
+        if hw_id > 27 : # sliders don't need flags
+            t = ET.Element('flags')
+            if hw_id >= 128 and hw_id <= 143:       # encoders
+                t.append(ET.Element('relative' if (msg[7] & 1) else 'absolute'))
+            else:
+                t.append(ET.Element('note' if (msg[7] & 1) else 'controller'))
+                t.append(ET.Element('momentary' if (msg[7] & 2) else 'toggle'))
+            ctl.append(t)
+
+        tree.getroot().append(ctl)
+    elif msg[1] == 4:
+        r_start = msg[2]
+        r_n = msg[3]
+
+        m = msg[4:-1]
+
+        if len(m) != r_n:
+            m = msg[-11:-1]
+
+        r = r_start
+        for v in m:
+            reg = ET.Element('register')
+            reg.set('id', str(r))
+            reg.text = str(v)
+            tree.getroot().append(reg)
+            r += 1
+
+    if msg[1] == 5:
+        break
+
+#file = open(f'preset{preset:02}.xml', mode='w')
+#print(xml_header, file=file)
+#print(ET.tostring(tree.getroot(), encoding='unicode').replace('&amp;','&'), file=file) # why TF do you convert &'s to entities when NOBODY ASKED?!
+#file.close()
+
+print(xml_header)
+print(ET.tostring(tree.getroot(), encoding='unicode').replace('&amp;','&')) # why TF do you convert &'s to entities when NOBODY ASKED?!
