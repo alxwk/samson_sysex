@@ -104,6 +104,8 @@ xml_header = '''<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <!ENTITY P6 "309">
 <!ENTITY P7 "310">
 <!ENTITY P8 "311">
+<!ENTITY current_port "5">
+<!ENTITY current_ch "10">
 ]>'''
 
 if len(sys.argv) < 2:
@@ -155,11 +157,11 @@ while True :
         ctl.append(t)
 
         t = ET.Element('channel')
-        t.text = str(msg[5])
+        t.text = '&current_ch;' if msg[5] == 10 else str(msg[5])
         ctl.append(t)
 
         t = ET.Element('port')
-        t.text = str(msg[6])
+        t.text = '&current_port;' if msg[6] == 5 else str(msg[6])
         ctl.append(t)
 
         if hw_id > 27 : # sliders don't need flags
