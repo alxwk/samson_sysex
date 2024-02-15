@@ -14,8 +14,6 @@ ctlxml_name=sys.argv[1]
 tree = ET.parse(ctlxml_name)
 
 midiout = rtmidi.MidiOut()
-midiin = rtmidi.MidiIn()
-midiin.ignore_types(sysex=False)
 
 out_ports = midiout.get_ports()
 out_portn = out_ports.index([i for i in out_ports if re.search("Graphite.*:1", i)][0])
@@ -36,6 +34,7 @@ for elem in tree.iter('control'):
         msg[5] = 1
         msg[8:10] = divmod(int(cc), 128)
         midiout.send_message(msg)
+        msg[8] = 0 # all the others are single-byte
 
     if port := elem.findtext('port') :
         msg[5] = 3
