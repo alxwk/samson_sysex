@@ -1,4 +1,4 @@
-The descriptions was taken literally from the manual.
+The descriptions were taken literally from the manual.
 
 The codes 0..127 are plain MIDI controller codes, while 128+ are "virtual" vendor ones, making the device send various MIDI messages, their types are specified in the corresponding column. The "Device ID" in those messages which need it is hardcoded as `00`.
 
