@@ -10,6 +10,7 @@ Files included:
 * [cc_table.md](cc_table.md) — CC numbers used for assigning functions to conrols, standard MIDI and vendor extended "virtual CC" ones
 * [registers.md](registers.md) — byte registers used for miscellaneous device-wide settings (zones setup mostly)
 * [rc_presets.md](rc_presets.md) — short description of "Remote Control" presets
+* [quirks.md](quirks.md) — quirks and issues
 
 Also, two Python utility scripts (using `rtmidi` library) for getting presets from the device and putting them there:
 
