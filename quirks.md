@@ -1,6 +1,6 @@
 # Quirks and issues
 
-(all of these refers to the latest 1.42 firmware, other versions may be different)
+(all of these refer to the latest 1.42 firmware, other versions may be different)
 
 * Parameters like curves and aftertouch ("miscellaneous setup" at the "Operational Flow Chart" in the manual) are system-wide, and don't belong to a single preset, so "Preset Reset" doesn't affect them. They can't be exported by "Graphite Editor" either, but can be (not all?) by SysEx'es (see [registers.md](registers.md))
 
