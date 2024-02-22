@@ -16,7 +16,7 @@
 
 Holding down the following buttons at switching on brings the device into one of service modes (probably incomplete):
 
-| | |
+| Buttons | Mode |
 |-|-|
 |both OCTAVE         | Init (factory reset?)                                                 |
 |both TRANSPOSE      | Shows firmware version, FW update mode?                               |
