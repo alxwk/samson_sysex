@@ -10,3 +10,14 @@
 
 * "Virtual" CCs for MMC transport specified in the manual send wrong messages (see note in [cc_table.md](cc_table.md))
 
+* It should be noted that the "Power" switch doesn't physically disconnects the power, it just (like ACPI power button at PC) signals to hardware to perform a graceful shutdown, including saving settings. So if you switch the device off not by the switch, but by pulling out the USB/power cable, they will not be saved. Also, sometimes the device can freeze for some reason, the switch will not work at all in this case.
+
+## Power-on button combos
+
+Holding down the following buttons at switching on brings the device into one of service modes (probably incomplete):
+
+| | |
+|-|-|
+|both OCTAVE         | Init (factory reset?)                                                 |
+|both TRANSPOSE      | Shows firmware version, FW update mode?                               |
+|OCTAVE- & TRANSPOSE-| Test mode (move and press all the controls and buttons to check them) |
