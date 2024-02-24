@@ -14,10 +14,10 @@
 
 ## Power-on button combos
 
-Holding down the following buttons at switching on brings the device into one of service modes (probably incomplete):
+Holding down the following buttons at switching on brings the device into one of service modes (the list is probably incomplete). Also note that entering them can reset all the settings into factory default, so export any necessary user-made presets onto a PC first.
 
-| | |
+| Buttons | Mode |
 |-|-|
 |both OCTAVE         | Init (factory reset?)                                                 |
 |both TRANSPOSE      | Shows firmware version, FW update mode?                               |
-|OCTAVE- & TRANSPOSE-| Test mode (move and press all the controls and buttons to check them) |
+|OCTAVE- & TRANSPOSE-| Test (move and press all the controls and buttons to check them).<br/> Goes into "Init" mode at switching off.|
