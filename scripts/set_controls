@@ -22,9 +22,10 @@ out_portn = out_ports.index([i for i in out_ports if re.search("Graphite.*:1", i
 
 midiout.open_port(out_portn)
 
+#        0      1    2     3     4   5  6  7  8  9
+msg = [0xf0, 0x00, 0x20, 0x6b, 0x02, 0, 0, 0, 0, 0, 0xf7]
+
 for elem in tree.iter('control'):
-#            0      1    2     3     4   5  6  7  8  9
-    msg = [0xf0, 0x00, 0x20, 0x6b, 0x02, 0, 0, 0, 0, 0, 0xf7]
 
     hwid = int(elem.get('id'))
 
@@ -34,16 +35,15 @@ for elem in tree.iter('control'):
         msg[5] = 1
         msg[8:10] = divmod(int(cc), 128)
         midiout.send_message(msg)
-        msg[8] = 0 # all the others are single-byte
 
     if port := elem.findtext('port') :
         msg[5] = 3
-        msg[9] = int(port)
+        msg[8:10] = (0, int(port))
         midiout.send_message(msg)
 
     if ch := elem.findtext('channel') :
         msg[5] = 2
-        msg[9] = int(ch)
+        msg[8:10] = (0, int(ch))
         midiout.send_message(msg)
 
     if flags_el := elem.find('flags') :
@@ -56,5 +56,5 @@ for elem in tree.iter('control'):
         if flags_el.find('momentary') is not None:
             flags |= 2
 
-        msg[9] = flags
+        msg[8:10] = (0, flags)
         midiout.send_message(msg)
