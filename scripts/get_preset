@@ -133,7 +133,7 @@ midiin.open_port(in_portn)
 
 tree = ET.ElementTree(ET.Element('preset'))
 
-midiout.send_message([0xf0,0,0x20,0x6b,2,5,preset-1,0xf7])
+midiout.send_message([0xf0, 0x00, 0x20, 0x6b, 0x02, 0x05, preset-1, 0xf7])
 
 while True :
     event = midiin.get_message()
@@ -143,7 +143,7 @@ while True :
     msg, delta = event
 
     if msg[1] < 4 :
-        hw_id = msg[1]*128+msg[2]
+        hw_id = msg[1]*128 + msg[2]
         if hw_id not in hwid_map : continue
 
         ctl = ET.Element('control', attrib={'id': hwid_map[hw_id]})
