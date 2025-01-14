@@ -38,15 +38,15 @@ and the responses get received from the output port `:4` ("Out Port 5").
 
 (numbers are 0-based, usual MIDI MSB/LSB 7-bit format)
 
-| Byte(s)   | Description                               |
-|-----------|-------------------------------------------|
-| F0        | SOX                                       |
-| *n1* *n2* | Hardware control ID (see [hardware_ids.md](hardware_ids.md))|
-| *rr* *rr* | Assigned Samson CC# (see the manual and [cc_table.md](cc_table.md))|
-| *cc*      | Channel# (`10` means the current)         |
-| *pp*      | Port# (`05` means the current)            |
-| *ff*      | Flags                                     |
-| F7        | EOX                                       |
+| Byte(s)   | Description                                                         |
+|-----------|---------------------------------------------------------------------|
+| F0        | SOX                                                                 |
+| *n1* *n2* | Hardware control ID (see [hardware_ids.md](hardware_ids.md))        |
+| *rr* *rr* | Assigned Samson CC# (see the manual and [cc_table.md](cc_table.md)) |
+| *cc*      | Channel# (`10` means the current)                                   |
+| *pp*      | Port# (`05` means the current)                                      |
+| *ff*      | Flags                                                               |
+| F7        | EOX                                                                 |
 
 (for Samson's "custom CCs" (> 127), +1 (e.g. CC#152 (Master Volume) => `01 19` == 0x99 == 153))
 
@@ -71,14 +71,14 @@ and the responses get received from the output port `:4` ("Out Port 5").
 
 ### Response type 2 (misc. settings)
 
-| Byte(s)   | Description                               |
-|-----------|-------------------------------------------|
-| F0        | SOX                                       |
-| 04        | Type |
-| *rr*      | Starting register of the subset (see [registers.md](registers.md)) |
-| *nn* | Presumably the number of registers, but is wrong for the starting `0x28` |
-| .. .. | Subset of the settings registers, starting from *rr* |
-| F7        | EOX                                       |
+| Byte(s)   | Description                                                              |
+|-----------|--------------------------------------------------------------------------|
+| F0        | SOX                                                                      |
+| 04        | Type                                                                     |
+| *rr*      | Starting register of the subset (see [registers.md](registers.md))       |
+| *nn*      | Presumably the number of registers, but is wrong for the starting `0x28` |
+| .. ..     | Subset of the settings registers, starting from *rr*                     |
+| F7        | EOX                                                                      |
 
 The message with the offset 0x28 is weird. Something is probably got messed up in the firmware,
 so that SysEx brings irregular(!) number of registers. Though the last five (apparently `0x2d`..`0x31`)
@@ -122,12 +122,12 @@ make sense, I have no idea about the others.
 
 ### Request
 
-| Byte(s)       | Description                          |
-|---------------|--------------------------------------|
-| F0            | SOX                                  |
-| 00 20 6b      | Arturia manufacturer ID              |
+| Byte(s)              | Description                              |
+|----------------------|------------------------------------------|
+| F0                   | SOX                                      |
+| 00 20 6b             | Arturia manufacturer ID                  |
 | 02 06 *nn* *vv* *vv* | write *vv* value to the *nn*'th register |
-| F7            | EOX                                  |
+| F7                   | EOX                                      |
 
 ## Saving the current setup into a preset
 
