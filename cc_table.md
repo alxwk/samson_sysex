@@ -84,7 +84,7 @@ The column **LSB @ read** specifies the codes returned by "Get Settings" sysex, 
 | 73  | Attack Time                       | Controller  | 00  | 49  |            |
 | 74  | Brightness                        | Controller  | 00  | 4A  |            |
 | 75  | Decay Time                        | Controller  | 00  | 4B  |            |
-| 76  | Vibrato Rate)                     | Controller  | 00  | 4C  |            |
+| 76  | Vibrato Rate                      | Controller  | 00  | 4C  |            |
 | 77  | Vibrato Depth                     | Controller  | 00  | 4D  |            |
 | 78  | Vibrato Delay                     | Controller  | 00  | 4E  |            |
 | 79  | Sound Cont.                       | Controller  | 00  | 4F  |            |
@@ -178,5 +178,5 @@ The column **LSB @ read** specifies the codes returned by "Get Settings" sysex, 
 |*168*| EJECT                             | MMC         | 01  | 28  | 29         |
 |*169*| CHASE                             | MMC         | 01  | 29  | 2A         |
 |*170*| COMMAND ERROR RESET               | MMC         | 01  | 2A  | 2B         |
-|~~170~~| ~~MMC RESET~~                     | MMC         |     |     |            |
+|~~170~~| ~~MMC RESET~~                   | MMC         |     |     |            |
 | 171 | Pitch Bend                        | Pitch Bend  | 01  | 2B  | 2C         |
